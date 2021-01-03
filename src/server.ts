@@ -1,7 +1,11 @@
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 import { ApolloServer } from 'apollo-server';
-import { schema } from './schema';
-import { createContext } from './context';
+import { SchemaService } from './graphql/schema';
 
-new ApolloServer({ schema, context: createContext }).listen().then(({ url }) => {
+const schemaService = container.resolve(SchemaService);
+const schema = schemaService.getSchema();
+
+new ApolloServer({ schema }).listen().then(({ url }) => {
   console.log(`Server is running on ${url}`);
 });

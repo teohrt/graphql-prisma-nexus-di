@@ -20,7 +20,9 @@
     "@prisma/client": "^2.13.1",
     "apollo-server": "^2.19.1",
     "nexus": "^1.0.0",
-    "nexus-plugin-prisma": "^0.27.0"
+    "nexus-plugin-prisma": "^0.27.0",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.4.0"
   },
   "devDependencies": {
     "@prisma/cli": "^2.13.1",

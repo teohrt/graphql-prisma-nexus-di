@@ -3,8 +3,9 @@ import {
   objectType,
   stringArg,
 } from 'nexus';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import { NexusObjectTypeDef } from 'nexus/dist/definitions/objectType';
+import TYPES from '../../ioc/types';
 import { IPrisma } from '../../db/prisma';
 import { IResolverService } from './resolver';
 
@@ -12,7 +13,7 @@ import { IResolverService } from './resolver';
 export default class QueryService implements IResolverService {
   private prisma: IPrisma;
 
-  constructor(@inject('Prisma') prisma: IPrisma) {
+  constructor(@inject(TYPES.Prisma) prisma: IPrisma) {
     this.prisma = prisma;
   }
 
@@ -25,7 +26,7 @@ export default class QueryService implements IResolverService {
 
         t.list.field('feed', {
           type: 'Post',
-          resolve: (_, args, ctx) => ctx.prisma.post.findMany({
+          resolve: (_, args, ctx) => prisma.client.post.findMany({
             where: { published: true },
           }),
         });
@@ -35,7 +36,7 @@ export default class QueryService implements IResolverService {
           args: {
             searchString: nullable(stringArg()),
           },
-          resolve: (_, { searchString }, ctx) => ctx.prisma.post.findMany({
+          resolve: (_, { searchString }, ctx) => prisma.client.post.findMany({
             where: {
               OR: [
                 { title: { contains: searchString as string } },

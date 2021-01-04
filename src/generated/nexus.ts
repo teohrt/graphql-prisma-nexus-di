@@ -4,7 +4,7 @@
  */
 
 
-import { Context } from "./../context"
+
 
 
 declare global {
@@ -195,7 +195,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: Context;
+  context: any;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;

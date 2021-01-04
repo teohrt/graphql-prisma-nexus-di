@@ -1,8 +1,10 @@
-import { inject, singleton } from 'tsyringe';
+import 'reflect-metadata';
+import { injectable, inject } from 'inversify';
 import { makeSchema, objectType } from 'nexus';
 import { nexusPrisma } from 'nexus-plugin-prisma';
 import { NexusGraphQLSchema } from 'nexus/dist/definitions/_types';
 import { IResolverService } from './resolvers/resolver';
+import TYPES from '../ioc/types';
 
 const User = objectType({
   name: 'User',
@@ -32,13 +34,16 @@ export interface ISchemaService {
   getSchema(): NexusGraphQLSchema
 }
 
-@singleton()
+@injectable()
 export class SchemaService {
   private mutationService: IResolverService;
 
   private queryService: IResolverService;
 
-  constructor(@inject('MutationService') ms: IResolverService, @inject('QueryService') qs: IResolverService) {
+  constructor(
+  @inject(TYPES.MutationService) ms: IResolverService,
+    @inject(TYPES.QueryService) qs: IResolverService,
+  ) {
     this.mutationService = ms;
     this.queryService = qs;
   }
@@ -50,10 +55,6 @@ export class SchemaService {
       outputs: {
         schema: `${__dirname}/../../schema.graphql`,
         typegen: `${__dirname}/../generated/nexus.ts`,
-      },
-      contextType: {
-        module: require.resolve('./context'),
-        export: 'Context',
       },
       sourceTypes: {
         modules: [

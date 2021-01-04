@@ -1,4 +1,4 @@
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 import {
   intArg,
   nonNull,
@@ -6,6 +6,7 @@ import {
   stringArg,
 } from 'nexus';
 import { NexusObjectTypeDef } from 'nexus/dist/definitions/objectType';
+import TYPES from '../../ioc/types';
 import { IPrisma } from '../../db/prisma';
 import { IResolverService } from './resolver';
 
@@ -13,7 +14,7 @@ import { IResolverService } from './resolver';
 export default class MutationService implements IResolverService {
   private prisma: IPrisma;
 
-  constructor(@inject('Prisma') prisma: IPrisma) {
+  constructor(@inject(TYPES.Prisma) prisma: IPrisma) {
     this.prisma = prisma;
   }
 

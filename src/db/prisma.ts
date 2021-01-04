@@ -1,11 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-import { singleton } from 'tsyringe';
+import { injectable } from 'inversify';
 
 export interface IPrisma {
   client: PrismaClient
 }
 
-@singleton()
+@injectable()
 export class Prisma implements IPrisma {
   public client: PrismaClient
 

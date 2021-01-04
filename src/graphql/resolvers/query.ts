@@ -17,7 +17,7 @@ export default class QueryService implements IResolverService {
     this.prisma = prisma;
   }
 
-  public getResolvers(): NexusObjectTypeDef<string> {
+  public getResolvers(): NexusObjectTypeDef<'Query'> {
     const { prisma } = this;
     return objectType({
       name: 'Query',

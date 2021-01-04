@@ -18,7 +18,7 @@ export default class MutationService implements IResolverService {
     this.prisma = prisma;
   }
 
-  public getResolvers(): NexusObjectTypeDef<string> {
+  public getResolvers(): NexusObjectTypeDef<'Mutation'> {
     const { prisma } = this;
 
     return objectType({
